@@ -32,9 +32,13 @@ class SelectTracksVias(pcbnew.ActionPlugin):
 #        dialog.m_comboNet.Append(net_names)
 #        dialog.m_comboNet.Insert('', 0)
         
-        net_names = list(pcbnew.GetBoard().GetNetInfo().NetsByName())
-        for item in net_names:
-            dialog.m_comboNet.Append(str(item))#.replace('{slash}', r'/'))
+        pcb = pcbnew.GetBoard()
+        net_names = [net.GetNetname() for net in pcb.GetNetsByName().values()]
+        dialog.m_comboNet.Set(net_names)
+  
+        #net_names = list(pcbnew.GetBoard().GetNetInfo().NetsByName())
+        #for item in net_names:
+        #    dialog.m_comboNet.Append(str(item))#.replace('{slash}', r'/'))
         
         #dialog.m_comboNet.AppendItems(net_names)
         #wx.MessageBox(str(len(netnames)))
